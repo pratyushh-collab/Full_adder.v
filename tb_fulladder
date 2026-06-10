@@ -1,0 +1,36 @@
+module testbench;
+  reg test_a, test_b, test_c;
+  wire test_sum, test_cout;
+  integer pass = 0, fail = 0;  // track results
+
+  full_adder DUT(.a(test_a), .b(test_b), .c(test_c), 
+.sum(test_sum), .cout(test_cout));
+
+  task check;
+    input exp_sum, exp_cout;
+    #10;
+    if (test_sum == exp_sum && test_cout == exp_cout) begin
+      $display("PASS: %b%b%b → Sum=%b Cout=%b", test_a,test_b,test_c,test_sum,test_cout);
+      pass = pass + 1;
+    end else begin
+      $display("FAIL: %b%b%b → Got Sum=%b Cout=%b, Expected Sum=%b Cout=%b",
+               test_a,test_b,test_c,test_sum,test_cout,exp_sum,exp_cout);
+      fail = fail + 1;
+    end
+    
+  endtask
+
+  initial begin
+    {test_a,test_b,test_c}=3'b000; check(1'b0, 1'b0);
+    {test_a,test_b,test_c}=3'b001; check(1'b1, 1'b0);
+    {test_a,test_b,test_c}=3'b010; check(1'b1, 1'b0);
+    {test_a,test_b,test_c}=3'b011; check(1'b0, 1'b1);
+    {test_a,test_b,test_c}=3'b100; check(1'b1, 1'b0);
+    {test_a,test_b,test_c}=3'b101; check(1'b0, 1'b1);
+    {test_a,test_b,test_c}=3'b110; check(1'b0, 1'b1);
+    {test_a,test_b,test_c}=3'b111; check(1'b1, 1'b1);
+
+    $display("Results: %0d PASSED, %0d FAILED", pass, fail);
+    $finish;
+  end
+endmodule
