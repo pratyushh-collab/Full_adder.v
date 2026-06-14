@@ -10,10 +10,10 @@ module testbench;
     input exp_sum, exp_cout;
     #10;
     if (test_sum == exp_sum && test_cout == exp_cout) begin
-      $display("PASS: %b%b%b → Sum=%b Cout=%b", test_a,test_b,test_c,test_sum,test_cout);
+      $display("PASS: %b%b%b  Sum=%b Cout=%b", test_a,test_b,test_c,test_sum,test_cout);
       pass = pass + 1;
     end else begin
-      $display("FAIL: %b%b%b → Got Sum=%b Cout=%b, Expected Sum=%b Cout=%b",
+      $display("FAIL: %b%b%b Got Sum=%b Cout=%b, Expected Sum=%b Cout=%b",
                test_a,test_b,test_c,test_sum,test_cout,exp_sum,exp_cout);
       fail = fail + 1;
     end
